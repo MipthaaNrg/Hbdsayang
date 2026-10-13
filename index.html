@@ -1,1 +1,748 @@
 
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10070a">
+  <title>Happy Birthday, Sayang ❤️</title>
+
+  <style>
+    :root {
+      --bg: #10070a;
+      --panel: #1d0c12;
+      --pink: #ff9cab;
+      --red: #d94d69;
+      --text: #fbe5e7;
+      --muted: #c8a5ad;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        radial-gradient(ellipse at top right, #571a2a70, transparent 45%),
+        radial-gradient(ellipse at bottom left, #40121e50, transparent 40%),
+        var(--bg);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button { font: inherit; }
+
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      padding: 22px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      color: var(--pink);
+      font-size: 23px;
+      font-style: italic;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .nav-links a:hover { color: var(--pink); }
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      min-height: 480px;
+      padding: 65px 7%;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "♥";
+      position: absolute;
+      right: 5%;
+      top: 30px;
+      font-size: clamp(190px, 35vw, 360px);
+      color: #e64d6b12;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 620px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      color: var(--pink);
+      font: 12px Arial, sans-serif;
+      letter-spacing: 5px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      color: var(--pink);
+      font-size: clamp(44px, 8vw, 80px);
+      font-weight: normal;
+      font-style: italic;
+      line-height: 1.08;
+      text-shadow: 0 0 35px #ff718633;
+    }
+
+    .intro {
+      max-width: 510px;
+      color: #e2c5ca;
+      font-size: 15px;
+      line-height: 1.9;
+      margin-top: 24px;
+    }
+
+    .signature {
+      color: var(--pink);
+      font-size: 22px;
+      font-style: italic;
+      margin-top: 20px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 27px;
+    }
+
+    .btn {
+      padding: 14px 21px;
+      border-radius: 50px;
+      border: 1px solid var(--red);
+      color: white;
+      background: linear-gradient(135deg, #f78699, #bd3654);
+      cursor: pointer;
+      transition: .25s;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px #e64d6b35;
+    }
+
+    .btn.outline {
+      background: transparent;
+      border-color: #81404e;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px 5% 60px;
+    }
+
+    .section-title {
+      text-align: center;
+      color: var(--pink);
+      font-size: clamp(29px, 5vw, 42px);
+      font-weight: normal;
+      font-style: italic;
+      margin-bottom: 27px;
+    }
+
+    .music-card {
+      background: #1a0b10ee;
+      border: 1px solid #63313e;
+      border-radius: 23px;
+      padding: 23px;
+      box-shadow: 0 15px 40px #0005;
+    }
+
+    .music-heading {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .album {
+      width: 75px;
+      height: 75px;
+      flex-shrink: 0;
+      border-radius: 15px;
+      background: linear-gradient(145deg, #873746, #240d15);
+      display: grid;
+      place-items: center;
+      font-size: 38px;
+    }
+
+    .song-title {
+      color: var(--pink);
+      font-size: 22px;
+      font-style: italic;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 7px;
+    }
+
+    /* Pemutar YouTube tetap terlihat */
+    .youtube-frame {
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 16 / 9;
+      min-height: 200px;
+      margin: 0 auto;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #080506;
+      border: 1px solid #58303a;
+    }
+
+    #ytplayer {
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+    }
+
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .letter {
+      max-width: 750px;
+      margin: auto;
+      padding: clamp(25px, 6vw, 50px);
+      background: linear-gradient(140deg, #f5e1ce, #d9b69b);
+      color: #49251f;
+      line-height: 1.9;
+      box-shadow: 0 15px 50px #0006;
+      border-radius: 4px;
+      transform: rotate(-.3deg);
+    }
+
+    .letter h3 {
+      font-size: 28px;
+      font-weight: normal;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .letter p { margin-bottom: 15px; }
+
+    .letter .signoff {
+      color: #843746;
+      font-style: italic;
+    }
+
+    .center {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .closing {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .big-heart {
+      color: var(--pink);
+      font-size: 43px;
+      animation: beat 1.4s infinite;
+    }
+
+    .closing h2 {
+      color: var(--pink);
+      font-size: clamp(24px, 4vw, 35px);
+      font-weight: normal;
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 15px auto;
+    }
+
+    .closing p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    footer {
+      max-width: 700px;
+      margin: auto;
+      padding: 25px;
+      border-top: 1px solid #49232c;
+      color: #a77b83;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -30px;
+      z-index: 5;
+      pointer-events: none;
+      animation: floatUp linear forwards;
+    }
+
+    #toast {
+      position: fixed;
+      z-index: 20;
+      bottom: 22px;
+      left: 50%;
+      width: max-content;
+      max-width: 90%;
+      padding: 13px 20px;
+      background: #34131d;
+      color: var(--pink);
+      border: 1px solid #81404e;
+      border-radius: 25px;
+      font-size: 13px;
+      text-align: center;
+      opacity: 0;
+      transform: translate(-50%, 15px);
+      transition: .3s;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-110vh) rotate(40deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes beat {
+      50% { transform: scale(1.17); }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 18px 5%; }
+      .logo { font-size: 19px; }
+      .nav-links { gap: 11px; }
+      .nav-links a { font-size: 11px; }
+      .hero { min-height: 450px; padding: 45px 7% 55px; }
+      .eyebrow { letter-spacing: 3px; }
+      .intro { font-size: 14px; }
+      .signature { font-size: 19px; }
+      .btn { padding: 13px 16px; font-size: 12px; }
+      .section { padding-left: 4%; padding-right: 4%; }
+      .music-card { padding: 15px; }
+      .song-title { font-size: 19px; }
+      .youtube-frame { min-height: 200px; }
+      .letter { padding: 26px 21px; font-size: 14px; }
+      .letter h3 { font-size: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <a href="#home" class="logo">♡ For My Sayang</a>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#musik">Musik</a>
+    <a href="#surat">Surat Cinta</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="eyebrow">SELAMAT ULANG TAHUN</div>
+      <h1>Happy Birthday,Rizky Okta<br>Sayang ♡</h1>
+
+      <p class="intro">
+        Di hari yang spesial ini, aku cuma ingin bilang
+        terima kasih karena kamu sudah hadir dalam hidupku.
+        Kamu adalah salah satu hal terindah yang pernah aku miliki.
+        Semoga hari-harimu selalu dipenuhi kebahagiaan, cinta,
+        kesehatan, dan semua hal baik yang kamu impikan.
+      </p>
+
+      <div class="signature">
+        I love you, always and forever ♥
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="heroPlay">♫ Putar Musik</button>
+        <button class="btn outline" id="openLetter">
+          ♥ Buka Surat Cinta
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="musik">
+    <h2 class="section-title">A Song Just for You ♡</h2>
+
+    <div class="music-card">
+      <div class="music-heading">
+        <div class="album">🌹</div>
+        <div>
+          <div class="song-title">Perfect — Ed Sheeran</div>
+          <p class="muted">
+            Lagu romantis untuk seseorang yang selalu
+            punya tempat spesial di hatiku. ❤️
+          </p>
+        </div>
+      </div>
+
+      <div class="youtube-frame">
+        <div id="ytplayer"></div>
+      </div>
+
+      <div class="player-controls">
+        <button class="btn" id="playButton">▶ Play</button>
+        <button class="btn outline" id="pauseButton">Ⅱ Pause</button>
+        <button class="btn outline" id="restartButton">↻ Ulang dari Awal</button>
+      </div>
+
+      <p class="status" id="musicStatus" role="status" aria-live="polite">
+        Menyiapkan lagu untuk Sayang...
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="surat">
+    <h2 class="section-title">Surat Cinta untuk Sayang ♡</h2>
+
+    <article class="letter">
+      <h3>To: My Sayang ♡</h3>
+
+      <p>Sayangku,</p>
+
+      <p>
+        Selamat ulang tahun, cintaku. Hari ini adalah hari yang
+        istimewa karena seseorang yang sangat berarti bagiku
+        bertambah usia. Aku berharap kamu selalu sehat, bahagia,
+        dan diberikan kekuatan untuk meraih semua impianmu.
+      </p>
+
+      <p>
+        Terima kasih karena sudah menjadi bagian dari hidupku.
+        Terima kasih untuk setiap senyuman, perhatian, cerita,
+        dan kenangan kecil yang membuat hari-hariku lebih berarti.
+        Kehadiranmu adalah hadiah yang sangat aku syukuri.
+      </p>
+
+      <p>
+        Aku tahu aku tidak selalu sempurna. Mungkin ada saatnya
+        aku melakukan kesalahan atau belum bisa memahami kamu
+        dengan baik. Tapi aku ingin terus belajar, bertumbuh,
+        dan menjadi seseorang yang bisa kamu andalkan.
+      </p>
+
+      <p>
+        Semoga di umur yang baru ini, lebih banyak kebahagiaan
+        datang kepadamu. Semoga segala hal yang sedang kamu
+        perjuangkan perlahan menemukan jalannya. Jangan lupa
+        beristirahat, menjaga diri, dan tetap tersenyum, ya.
+      </p>
+
+      <p>
+        Aku tidak tahu semua hal yang akan terjadi di masa depan,
+        tetapi aku berharap kita masih bisa berbagi banyak cerita,
+        tertawa bersama, saling mendukung, dan menciptakan
+        kenangan indah lainnya.
+      </p>
+
+      <p>
+        Selamat ulang tahun, Sayang. Kamu berharga, kamu pantas
+        dicintai, dan aku bersyukur bisa mengenalmu.
+      </p>
+
+      <p class="signoff">
+        With all my love,<br>
+        Dari seseorang yang menyayangimu sepenuh hati. ♥
+      </p>
+    </article>
+
+    <div class="center">
+      <button class="btn" id="loveButton">Kirim Banyak Cinta ♥</button>
+    </div>
+  </section>
+
+  <section class="closing" id="akhir">
+    <div class="big-heart">♥</div>
+    <h2>Terima kasih sudah hadir di hidupku, Sayang.</h2>
+    <p>
+      Semoga ulang tahun ini menjadi awal dari banyak
+      hal indah yang menantimu.
+    </p>
+    <p>Happy birthday, my favorite person. ♡</p>
+
+    <div class="center">
+      <button class="btn" id="backTop">♥ Kembali ke Awal</button>
+    </div>
+  </section>
+</main>
+
+<footer>Made with love, just for you ♡</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  // ID video resmi yang dituju. Ganti jika video tidak tersedia
+  // di wilayahmu atau ID videonya berubah.
+  const VIDEO_ID = "2Vv-BfVoq4g";
+
+  let player = null;
+  let apiReady = false;
+  let playRequested = false;
+  let toastTimer;
+
+  const $ = id => document.getElementById(id);
+
+  function showToast(message) {
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+  }
+
+  function setStatus(message) {
+    $("musicStatus").textContent = message;
+  }
+
+  function updateButtons(playing) {
+    $("heroPlay").textContent = playing
+      ? "Ⅱ Jeda Musik"
+      : "♫ Putar Musik";
+
+    $("playButton").textContent = playing
+      ? "Ⅱ Sedang Diputar"
+      : "▶ Play";
+  }
+
+  function playMusic() {
+    if (!apiReady || !player) {
+      playRequested = true;
+      setStatus("Pemutar sedang dimuat. Tunggu sebentar, ya ❤️");
+      return;
+    }
+
+    playRequested = true;
+    player.playVideo();
+    setStatus("Meminta YouTube memutar lagu untuk Sayang...");
+  }
+
+  function pauseMusic() {
+    playRequested = false;
+
+    if (player && apiReady) {
+      player.pauseVideo();
+    }
+
+    updateButtons(false);
+    setStatus("Musik dijeda. Tekan Play untuk melanjutkan.");
+  }
+
+  function restartMusic() {
+    playRequested = true;
+
+    if (player && apiReady) {
+      player.seekTo(0, true);
+      player.playVideo();
+      setStatus("Memutar ulang lagu dari awal ❤️");
+    } else {
+      setStatus("Pemutar masih dimuat. Coba lagi sebentar.");
+    }
+  }
+
+  $("heroPlay").addEventListener("click", () => {
+    if (!apiReady || !player) {
+      playMusic();
+      return;
+    }
+
+    const state = player.getPlayerState();
+
+    if (state === YT.PlayerState.PLAYING ||
+        state === YT.PlayerState.BUFFERING) {
+      pauseMusic();
+    } else {
+      playMusic();
+    }
+  });
+
+  $("playButton").addEventListener("click", playMusic);
+  $("pauseButton").addEventListener("click", pauseMusic);
+  $("restartButton").addEventListener("click", restartMusic);
+
+  $("openLetter").addEventListener("click", () => {
+    $("surat").scrollIntoView({ behavior: "smooth" });
+    makeHearts(18);
+  });
+
+  $("loveButton").addEventListener("click", () => {
+    makeHearts(40);
+    showToast("Banyak cinta dan peluk virtual buat Sayang! ❤️");
+  });
+
+  $("backTop").addEventListener("click", () => {
+    $("home").scrollIntoView({ behavior: "smooth" });
+    makeHearts(20);
+  });
+
+  // Fungsi ini dipanggil oleh YouTube IFrame API.
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player("ytplayer", {
+      width: "560",
+      height: "315",
+      videoId: VIDEO_ID,
+
+      playerVars: {
+        autoplay: 1,
+        controls: 1,
+        playsinline: 1,
+        enablejsapi: 1,
+        rel: 0
+      },
+
+      events: {
+        onReady: function (event) {
+          apiReady = true;
+          event.target.setVolume(70);
+
+          // Coba autoplay. Browser boleh menolaknya.
+          event.target.playVideo();
+          setStatus(
+            "Mencoba memutar Perfect — Ed Sheeran secara otomatis..."
+          );
+
+          // Jika pengunjung sudah menekan tombol ketika API dimuat.
+          if (playRequested) {
+            event.target.playVideo();
+          }
+        },
+
+        onStateChange: function (event) {
+          if (event.data === YT.PlayerState.PLAYING) {
+            updateButtons(true);
+            setStatus("Lagu sedang diputar. Semoga Sayang suka ❤️");
+          }
+
+          if (event.data === YT.PlayerState.PAUSED) {
+            updateButtons(false);
+            setStatus("Musik dijeda.");
+          }
+
+          if (event.data === YT.PlayerState.ENDED) {
+            updateButtons(false);
+            setStatus("Lagu selesai. Kamu bisa memutarnya lagi ♡");
+          }
+
+          if (event.data === YT.PlayerState.BUFFERING) {
+            setStatus("Memuat lagu...");
+          }
+        },
+
+        onError: function (event) {
+          updateButtons(false);
+          setStatus(
+            "Video tidak bisa diputar (kode " + event.data +
+            "). Coba video lain atau buka YouTube."
+          );
+        },
+
+        onAutoplayBlocked: function () {
+          updateButtons(false);
+          setStatus(
+            "Autoplay diblokir browser. Tekan tombol Play untuk mulai musik ❤️"
+          );
+        }
+      }
+    });
+  };
+
+  // Memuat YouTube IFrame Player API.
+  (function loadYouTubeAPI() {
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    tag.async = true;
+
+    tag.onerror = function () {
+      setStatus(
+        "API YouTube gagal dimuat. Periksa koneksi internet."
+      );
+    };
+
+    document.head.appendChild(tag);
+  })();
+
+  // Animasi hati terbang.
+  function makeHearts(count) {
+    const symbols = ["♥", "♡", "💗", "✨"];
+
+    for (let i = 0; i < count; i++) {
+      const heart = document.createElement("span");
+      heart.className = "floating-heart";
+      heart.textContent =
+        symbols[Math.floor(Math.random() * symbols.length)];
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (15 + Math.random() * 20) + "px";
+      heart.style.color =
+        Math.random() > 0.5 ? "#ff8198" : "#ffc0ca";
+      heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7500);
+    }
+  }
+
+  setInterval(() => {
+    if (Math.random() > 0.35) makeHearts(1);
+  }, 1800);
+</script>
+
+</body>
+</html>
