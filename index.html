@@ -307,15 +307,24 @@
 
 <body>
   <!-- Pemutar YouTube dikendalikan lewat IFrame API -->
-  <div id="youtube-player" aria-hidden="true"></div>
-
-  <div class="music-control">
-    <button id="music-button" type="button" aria-label="Putar musik">♫</button>
-    <div class="music-label">
-      <span id="music-status">Putar lagu cinta</span>
-      <small>A Thousand Years · Christina Perri</small>
-    </div>
+  <!-- Pemutar video lirik Vimeo -->
+<div class="music-control">
+  <button id="music-button" type="button" aria-label="Putar musik">♫</button>
+  <div class="music-label">
+    <span id="music-status">Putar lagu cinta</span>
+    <small>A Thousand Years · Christina Perri</small>
   </div>
+</div>
+
+<div id="vimeo-player" style="
+  position:fixed;
+  width:1px;
+  height:1px;
+  left:-100px;
+  bottom:0;
+  overflow:hidden;
+"></div>
+
 
   <main>
     <header class="hero" id="home">
@@ -353,7 +362,7 @@
         </p>
 
         <article class="letter-card">
-          <p>Untuk Rizky Okta, sayangku yang paling istimewa ❤️</p>
+          <p>Untuk Rizky Okta, sayangku yang paling ❤️</p>
 
           <p>
             Selamat ulang tahun, cintaku. Semoga hari ini dipenuhi
@@ -428,6 +437,9 @@
           </div>
         </div>
       </div>
+
+
+
     </section>
   </main>
 
@@ -436,6 +448,71 @@
   </footer>
 
   <script>
+
+  
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+  const VIMEO_VIDEO_ID = 65816784;
+
+  const musicButton = document.getElementById("music-button");
+  const musicStatus = document.getElementById("music-status");
+
+  const iframe = document.createElement("iframe");
+  iframe.src =
+    "https://player.vimeo.com/video/" +
+    VIMEO_VIDEO_ID +
+    "?autoplay=0&muted=0&controls=0&title=0&byline=0&portrait=0";
+
+  iframe.allow = "autoplay; fullscreen; picture-in-picture";
+  iframe.title = "A Thousand Years - Christina Perri";
+  iframe.setAttribute("allowfullscreen", "");
+
+  document.getElementById("vimeo-player").appendChild(iframe);
+
+  const player = new Vimeo.Player(iframe);
+
+  let playing = false;
+
+  musicButton.addEventListener("click", async () => {
+    try {
+      if (playing) {
+        await player.pause();
+        playing = false;
+        musicButton.textContent = "♫";
+        musicStatus.textContent = "Musik dijeda";
+      } else {
+        await player.setCurrentTime(0);
+        await player.setVolume(1);
+        await player.play();
+
+        playing = true;
+        musicButton.textContent = "Ⅱ";
+        musicStatus.textContent = "Now playing ♥";
+      }
+    } catch (error) {
+      musicStatus.textContent = "Tidak dapat memutar video";
+      console.error("Vimeo playback error:", error);
+    }
+  });
+
+  player.on("ended", () => {
+    playing = false;
+    musicButton.textContent = "♫";
+    musicStatus.textContent = "Lagu selesai";
+  });
+
+  player.on("pause", () => {
+    playing = false;
+    musicButton.textContent = "♫";
+    musicStatus.textContent = "Musik dijeda";
+  });
+
+  player.on("play", () => {
+    playing = true;
+    musicButton.textContent = "Ⅱ";
+    musicStatus.textContent = "Now playing ♥";
+  });
+
     // Official music video: Christina Perri - A Thousand Years
     const VIDEO_ID = "rtOvBOTyX00";
 
