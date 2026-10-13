@@ -613,16 +613,16 @@ document.addEventListener("keydown", unlockMusicAudio, true);
   }
 
   function restartMusic() {
-    playRequested = true;
+  playRequested = true;
 
-    if (player && apiReady) {
-      player.seekTo(0, true);
-      player.playVideo();
-      setStatus("Memutar ulang lagu dari awal ❤️");
-    } else {
-      setStatus("Pemutar masih dimuat. Coba lagi sebentar.");
-    }
+  if (player && apiReady) {
+    player.seekTo(24, true);
+    player.playVideo();
+    setStatus("Memutar Perfect mulai dari 0:24 untuk Sayang ❤️");
+  } else {
+    setStatus("Pemutar masih dimuat. Coba lagi sebentar.");
   }
+}
 
   $("heroPlay").addEventListener("click", () => {
     if (!apiReady || !player) {
@@ -672,6 +672,7 @@ document.addEventListener("keydown", unlockMusicAudio, true);
         playsinline: 1,
         enablejsapi: 1,
         rel: 0
+          start: 24
       },
 
       events: {
