@@ -4,297 +4,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10070a">
-<title>Happy Birthday, Sayang ❤️</title>
+<meta name="theme-color" content="#120809">
+<title>For My Sayang ❤️</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --bg: #100708;
+  --panel: #1b0c10;
+  --red: #ed687a;
+  --pink: #ffb0b8;
+  --cream: #ffe7df;
+  --muted: #c7a5a7;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: Georgia, "Times New Roman", serif;
   background:
-    radial-gradient(ellipse at top, #40151f 0%, transparent 55%),
-    #10070a;
-  color: #ffe8e8;
+    radial-gradient(ellipse at 80% 10%, #48151d66, transparent 40%),
+    radial-gradient(ellipse at 15% 55%, #35101655, transparent 45%),
+    var(--bg);
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-nav {
-  max-width: 1100px;
+button, a { -webkit-tap-highlight-color: transparent; }
+
+button { font: inherit; }
+
+a { color: inherit; text-decoration: none; }
+
+.nav {
+  max-width: 1200px;
   margin: auto;
-  padding: 22px 6%;
+  padding: 24px 6%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-.logo {
-  font-size: 23px;
+.brand {
+  font-size: 25px;
   font-style: italic;
-  color: #ff9eae;
+  color: var(--pink);
 }
 
-nav a {
-  color: #f5d9dc;
-  text-decoration: none;
-  font-size: 13px;
-  margin-left: 15px;
+.nav-links {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  font-size: 14px;
 }
 
-nav a:hover {
-  color: #ff8499;
-}
+.nav-links a:hover { color: var(--red); }
 
 .hero {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
-  padding: 65px 7% 85px;
-  min-height: 520px;
+  min-height: 510px;
+  padding: 55px 7% 70px;
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.hero::after {
+.hero::before {
   content: "♥";
   position: absolute;
-  right: 7%;
-  top: 60px;
-  font-size: clamp(180px, 35vw, 370px);
-  color: #e84b6b10;
-  z-index: 0;
+  right: 12%;
+  top: 40px;
+  font-size: clamp(200px, 36vw, 400px);
+  color: #6b17251c;
+  pointer-events: none;
 }
 
 .hero-content {
-  max-width: 620px;
   position: relative;
+  max-width: 620px;
   z-index: 1;
 }
 
 .eyebrow {
-  color: #ff8297;
+  color: var(--red);
+  text-transform: uppercase;
   letter-spacing: 5px;
   font: 12px Arial, sans-serif;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
 }
 
 h1 {
-  color: #ffb0bc;
-  font-size: clamp(46px, 8vw, 82px);
+  color: var(--pink);
+  font-size: clamp(45px, 8vw, 86px);
+  line-height: 1.05;
   font-weight: normal;
   font-style: italic;
-  line-height: 1.08;
-  text-shadow: 0 0 35px #ff637a35;
+  text-shadow: 0 0 35px #ff667c30;
 }
 
 .intro {
-  color: #dfc2c7;
-  line-height: 1.9;
-  font-size: 15px;
-  margin-top: 25px;
   max-width: 510px;
+  margin-top: 25px;
+  line-height: 1.9;
+  color: #e0c4c5;
+  font-size: 16px;
 }
 
 .signature {
-  color: #ff9eae;
+  color: var(--pink);
+  font-size: 23px;
   font-style: italic;
-  font-size: 22px;
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 13px;
   margin-top: 28px;
 }
 
 .btn {
-  padding: 14px 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 23px;
   border-radius: 50px;
-  border: 1px solid #d95770;
-  background: linear-gradient(135deg, #fa8496, #c43e58);
-  color: white;
+  border: 1px solid #b94b5c;
   cursor: pointer;
-  font-size: 14px;
+  color: white;
+  background: linear-gradient(135deg, #f17b89, #bc3d55);
   transition: .25s;
+  font-size: 14px;
 }
 
 .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 7px 22px #f45d7635;
+  box-shadow: 0 7px 24px #ee617333;
 }
 
 .btn.outline {
   background: transparent;
-  border-color: #81424e;
+  border-color: #79404a;
 }
 
+.btn.outline:hover { background: #ffffff0c; }
+
 .section {
-  max-width: 1050px;
-  margin: auto;
+  max-width: 1100px;
+  margin: 0 auto;
   padding: 25px 5% 65px;
 }
 
-.player {
-  background: #1a0c10;
-  border: 1px solid #60313a;
-  border-radius: 22px;
-  padding: 25px;
+.music-player {
   display: grid;
-  grid-template-columns: 130px minmax(0, 1fr);
-  gap: 25px;
+  grid-template-columns: 145px minmax(0, 1fr) 240px;
+  gap: 26px;
   align-items: center;
-  box-shadow: 0 15px 40px #0005;
+  padding: 25px;
+  border: 1px solid #63333b;
+  border-radius: 23px;
+  background: #170b0ddd;
+  box-shadow: 0 15px 50px #00000030;
 }
 
 .album {
-  width: 100%;
   aspect-ratio: 1;
-  border-radius: 18px;
   display: grid;
   place-items: center;
-  font-size: 60px;
-  background: linear-gradient(145deg, #803745, #17090d);
-  border: 1px solid #a45664;
+  border-radius: 18px;
+  font-size: 65px;
+  background:
+    radial-gradient(circle at 70% 25%, #ef788766, transparent 25%),
+    linear-gradient(145deg, #682b39, #170b13 75%);
+  border: 1px solid #8c4c55;
 }
 
-.song-title {
+.album.playing { animation: glow 3s ease-in-out infinite; }
+
+@keyframes glow {
+  50% { box-shadow: 0 0 30px #ed687a45; }
+}
+
+.track-title {
+  color: var(--pink);
   font-size: 23px;
   font-style: italic;
-  color: #ffacb8;
-  margin-bottom: 9px;
+  margin-bottom: 8px;
 }
 
-.song-subtitle {
+.track-desc {
   font-size: 13px;
-  line-height: 1.7;
-  color: #c9a7ad;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
-audio {
+.progress-wrap { margin: 24px 0 8px; }
+
+input[type="range"] {
   width: 100%;
-  margin-top: 20px;
-  accent-color: #fa8194;
-}
-
-.player-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.player-actions button {
-  background: #32151d;
-  color: #ffb2bd;
-  border: 1px solid #69313e;
-  padding: 10px 15px;
-  border-radius: 25px;
+  accent-color: var(--red);
   cursor: pointer;
 }
 
-.note {
-  color: #bd989f;
-  font-size: 12px;
-  line-height: 1.7;
-  margin-top: 13px;
+.time {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font: 11px Arial, sans-serif;
+  margin-top: 5px;
 }
 
-.heading {
-  text-align: center;
-  font-size: clamp(29px, 5vw, 42px);
-  font-style: italic;
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.control {
+  border: none;
+  background: transparent;
+  color: var(--pink);
+  cursor: pointer;
+  font-size: 23px;
+  padding: 8px;
+}
+
+.control.main {
+  background: var(--red);
+  color: #24080e;
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
+}
+
+.control:hover { color: white; }
+
+.playlist {
+  border: 1px solid #42252b;
+  border-radius: 18px;
+  padding: 15px;
+}
+
+.playlist h3 {
+  color: var(--pink);
+  font-size: 15px;
   font-weight: normal;
-  color: #ffadba;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
+}
+
+.song {
+  width: 100%;
+  display: block;
+  text-align: left;
+  color: #c9a9ab;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.song:hover, .song.active {
+  background: #57232b55;
+  color: var(--pink);
+}
+
+.letter-section { padding-top: 60px; }
+
+.section-heading {
+  text-align: center;
+  font-weight: normal;
+  font-size: clamp(30px, 5vw, 43px);
+  font-style: italic;
+  color: var(--pink);
+  margin-bottom: 25px;
 }
 
 .letter {
-  max-width: 750px;
+  max-width: 760px;
   margin: auto;
-  background: linear-gradient(140deg, #f4dfca, #d9b69b);
-  color: #49251f;
-  padding: clamp(25px, 6vw, 52px);
-  line-height: 1.9;
-  box-shadow: 0 15px 50px #0006;
-  transform: rotate(-.3deg);
+  background: linear-gradient(145deg, #f5dfc9, #dcbda2);
+  color: #48231f;
   border-radius: 4px;
+  padding: clamp(25px, 6vw, 55px);
+  box-shadow: 0 15px 50px #0007;
   position: relative;
+  line-height: 1.9;
+  transform: rotate(-.4deg);
+}
+
+.letter::before {
+  content: "♥";
+  position: absolute;
+  right: 22px;
+  top: 12px;
+  color: #9d4a4a;
+  font-size: 26px;
+  opacity: .6;
 }
 
 .letter h3 {
-  font-size: 28px;
-  font-weight: normal;
+  font-size: 27px;
   font-style: italic;
-  margin-bottom: 18px;
+  font-weight: normal;
+  margin-bottom: 20px;
 }
 
-.letter p {
-  margin-bottom: 15px;
-}
+.letter p { margin-bottom: 16px; }
 
 .letter .signoff {
   font-style: italic;
-  color: #843746;
+  color: #803747;
 }
 
-.letter-button {
+.letter-actions {
   text-align: center;
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .closing {
   text-align: center;
-  padding: 50px 20px;
+  padding: 60px 20px 40px;
 }
 
-.big-heart {
-  font-size: 42px;
-  color: #ff8195;
-  animation: heartbeat 1.4s infinite;
+.closing .heart {
+  color: var(--red);
+  font-size: 40px;
+  animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+  50% { transform: scale(1.18); }
 }
 
 .closing h2 {
-  color: #ffb1bc;
+  font-size: clamp(23px, 4vw, 35px);
   font-weight: normal;
   font-style: italic;
-  line-height: 1.5;
-  font-size: clamp(23px, 4vw, 34px);
-  margin: 15px auto;
-  max-width: 700px;
+  color: var(--pink);
+  margin: 16px 0;
 }
 
-.closing p {
-  color: #c8a4aa;
-  line-height: 1.8;
-}
+.closing p { color: var(--muted); line-height: 1.8; }
 
 footer {
   text-align: center;
-  color: #a77a82;
-  font-size: 12px;
-  padding: 25px;
-  border-top: 1px solid #422129;
+  border-top: 1px solid #49242a;
+  margin: 0 auto;
   max-width: 700px;
-  margin: auto;
+  padding: 24px;
+  color: #a67a80;
+  font-size: 12px;
 }
 
-.heart {
+.floating-heart {
   position: fixed;
-  bottom: -30px;
+  z-index: 5;
   pointer-events: none;
-  z-index: 10;
+  bottom: -30px;
   animation: floatUp linear forwards;
 }
 
@@ -305,152 +382,136 @@ footer {
   }
 }
 
-@keyframes heartbeat {
-  50% { transform: scale(1.17); }
+#toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: #35141c;
+  color: var(--pink);
+  border: 1px solid #81414d;
+  padding: 13px 20px;
+  border-radius: 25px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+  z-index: 10;
+  font-size: 13px;
+  text-align: center;
+  width: max-content;
+  max-width: 90%;
 }
 
-@media(max-width: 600px) {
-  nav {
-    padding: 18px 5%;
-  }
+#toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
 
-  .logo {
-    font-size: 19px;
+@media (max-width: 800px) {
+  .music-player {
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 18px;
+    padding: 18px;
   }
+  .playlist { grid-column: 1 / -1; }
+  .album { font-size: 45px; }
+  .nav-links { gap: 13px; font-size: 12px; }
+}
 
-  nav a {
-    font-size: 11px;
-    margin-left: 8px;
-  }
-
-  .hero {
-    min-height: 470px;
-    padding: 45px 7% 60px;
-  }
-
-  .eyebrow {
-    letter-spacing: 3px;
-  }
-
-  .intro {
-    font-size: 14px;
-  }
-
-  .signature {
-    font-size: 19px;
-  }
-
-  .btn {
-    padding: 13px 16px;
-    font-size: 12px;
-  }
-
-  .player {
-    grid-template-columns: 82px minmax(0, 1fr);
-    gap: 15px;
-    padding: 15px;
-  }
-
-  .album {
-    font-size: 38px;
-  }
-
-  .song-title {
-    font-size: 19px;
-  }
-
-  .song-subtitle {
-    font-size: 12px;
-  }
-
-  .section {
-    padding-left: 4%;
-    padding-right: 4%;
-  }
-
-  .letter {
-    padding: 26px 21px;
-    font-size: 14px;
-  }
-
-  .letter h3 {
-    font-size: 24px;
-  }
+@media (max-width: 480px) {
+  .nav { padding: 20px 5%; }
+  .brand { font-size: 20px; }
+  .nav-links { gap: 12px; }
+  .nav-links a:nth-child(3) { display: none; }
+  .hero { min-height: 470px; padding: 50px 7%; }
+  .eyebrow { letter-spacing: 3px; }
+  .intro { font-size: 14px; }
+  .signature { font-size: 20px; }
+  .btn { padding: 13px 16px; font-size: 12px; }
+  .section { padding-left: 4%; padding-right: 4%; }
+  .music-player { padding: 14px; gap: 12px; }
+  .track-title { font-size: 19px; }
+  .track-desc { font-size: 12px; }
+  .control { font-size: 19px; padding: 5px; }
+  .control.main { width: 45px; height: 45px; }
+  .letter { padding: 28px 22px; font-size: 14px; }
+  .letter h3 { font-size: 24px; }
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <a href="#home" class="logo">♡ For My Sayang</a>
-  <div>
+<nav class="nav">
+  <a href="#home" class="brand">♡ For My Sayang</a>
+  <div class="nav-links">
     <a href="#home">Home</a>
     <a href="#surat">Surat Cinta</a>
+    <a href="#akhir">Tentang Kita ♥</a>
   </div>
 </nav>
 
 <main>
 <section class="hero" id="home">
   <div class="hero-content">
-    <div class="eyebrow">SELAMAT ULANG TAHUN</div>
-
-    <h1>Happy Birthday,Rizky Okta<br>Sayang ♡</h1>
-
+    <div class="eyebrow">Selamat Ulang Tahun</div>
+    <h1>Happy Birthday,<br>Sayang ♡</h1>
     <p class="intro">
       Di hari yang spesial ini, aku cuma ingin mengucapkan
-      terima kasih karena kamu sudah hadir dalam hidupku.
-      Kamu adalah salah satu hal terindah yang pernah aku miliki.
-      Semoga setiap langkahmu dipenuhi kebahagiaan, kesehatan,
-      dan semua hal baik yang kamu impikan.
+      satu hal: terima kasih sudah ada, terima kasih sudah
+      menjadi bagian dari hidupku. Kamu adalah salah satu
+      hal terbaik yang pernah aku miliki. Semoga hari ini,
+      besok, dan seterusnya selalu dipenuhi kebahagiaan,
+      cinta, dan hal-hal baik.
     </p>
-
-    <div class="signature">
-      I love you, always and forever ♥
-    </div>
-
+    <div class="signature">I love you, always and forever ♥</div>
     <div class="actions">
-      <button class="btn" id="playTop">♫ Putar Musik</button>
-      <button class="btn outline" id="openLetter">
-        ♥ Buka Surat Cinta
-      </button>
+      <button class="btn" id="heroPlay">▶ Putar Musik</button>
+      <button class="btn outline" id="openLetter">♧ Buka Surat Cinta</button>
     </div>
   </div>
 </section>
 
 <section class="section" id="musik">
-  <div class="player">
-    <div class="album">🌹</div>
+  <div class="music-player">
+    <div class="album" id="album">🌹</div>
 
-    <div>
-      <div class="song-title">Perfect — Ed Sheeran</div>
-
-      <p class="song-subtitle">
-        Lagu romantis untuk seseorang yang selalu punya
-        tempat spesial di hatiku. ❤️
+    <div class="player-main">
+      <div class="track-title" id="trackTitle">A Little Love for You</div>
+      <p class="track-desc" id="trackDesc">
+        Melodi kecil untuk seseorang yang berarti segalanya ♡
       </p>
 
-      <audio id="music" controls loop preload="auto">
-        <source src="perfect.mp3" type="audio/mpeg">
-        Browser kamu tidak mendukung audio.
-      </audio>
-
-      <div class="player-actions">
-        <button id="playButton">▶ Play</button>
-        <button id="pauseButton">Ⅱ Pause</button>
-        <button id="restartButton">↻ Ulang dari Awal</button>
+      <div class="progress-wrap">
+        <input type="range" id="progress" min="0" max="100"
+               value="0" aria-label="Posisi musik">
+        <div class="time">
+          <span id="currentTime">0:00</span>
+          <span id="duration">1:30</span>
+        </div>
       </div>
 
-      <p class="note" id="musicStatus">
-        Musik akan dicoba diputar otomatis. Jika diblokir browser,
-        tekan tombol Play atau sentuh halaman.
-      </p>
+      <div class="controls">
+        <button class="control" id="shuffle" aria-label="Acak lagu">⤨</button>
+        <button class="control" id="previous" aria-label="Lagu sebelumnya">◀</button>
+        <button class="control main" id="playPause" aria-label="Putar musik">▶</button>
+        <button class="control" id="next" aria-label="Lagu berikutnya">▶|</button>
+        <button class="control" id="repeat" aria-label="Ulangi lagu">↻</button>
+      </div>
+    </div>
+
+    <div class="playlist">
+      <h3>♫ Playlist Romantis</h3>
+      <div id="songs"></div>
     </div>
   </div>
+  <p class="track-desc" style="text-align:center;margin-top:12px">
+    Musik instrumental sintetis dibuat langsung oleh website ini.
+  </p>
 </section>
 
-<section class="section" id="surat">
-  <h2 class="heading">Surat Cinta untuk Sayang ♡</h2>
+<section class="section letter-section" id="surat">
+  <h2 class="section-heading">Surat Cinta untuk Sayang ♡</h2>
 
   <article class="letter">
     <h3>To: My Sayang ♡</h3>
@@ -458,68 +519,52 @@ footer {
     <p>Sayangku,</p>
 
     <p>
-      Selamat ulang tahun, cintaku. Hari ini adalah hari yang
-      istimewa karena seseorang yang sangat berarti bagiku
-      bertambah usia. Aku berharap kamu selalu sehat, bahagia,
-      dan diberikan kekuatan untuk meraih semua impianmu.
+      Hari ini adalah hari yang sangat spesial, bukan hanya
+      untuk merayakan bertambahnya usiamu, tetapi juga untuk
+      mengingat betapa beruntungnya aku memiliki kamu di hidupku.
+      Kamu adalah sosok yang selalu membuat hari-hariku lebih
+      berwarna, yang selalu ada di saat aku senang maupun sedih.
     </p>
 
     <p>
-      Terima kasih karena sudah menjadi bagian dari hidupku.
-      Terima kasih untuk setiap senyuman, perhatian, cerita,
-      dan kenangan kecil yang membuat hari-hariku lebih berarti.
-      Kehadiranmu adalah hadiah yang sangat aku syukuri.
+      Terima kasih sudah menjadi kamu, dengan segala kelebihan
+      dan kekurangannya. Aku mencintaimu, bukan hanya karena
+      apa yang kamu lakukan, tetapi juga karena siapa kamu.
+      Semoga di tahun yang baru ini, kamu semakin sehat,
+      bahagia, dan semua impianmu bisa tercapai.
     </p>
 
     <p>
-      Aku tahu aku tidak selalu sempurna. Mungkin ada saatnya
-      aku melakukan kesalahan atau belum bisa memahami kamu
-      dengan baik. Tapi aku ingin terus belajar, bertumbuh,
-      dan menjadi seseorang yang bisa kamu andalkan.
+      Aku mungkin tidak bisa menjanjikan hidup yang selalu
+      sempurna, tapi aku ingin terus belajar menjadi seseorang
+      yang bisa kamu percaya, tempat kamu bercerita, dan orang
+      yang selalu mendukungmu. Semoga kita bisa terus tumbuh
+      bersama, melewati hari baik dan hari sulit, satu langkah
+      demi satu langkah.
     </p>
 
     <p>
-      Semoga di umur yang baru ini, lebih banyak kebahagiaan
-      datang kepadamu. Semoga segala hal yang sedang kamu
-      perjuangkan perlahan menemukan jalannya. Jangan lupa
-      beristirahat, menjaga diri, dan tetap tersenyum, ya.
-    </p>
-
-    <p>
-      Aku tidak tahu semua hal yang akan terjadi di masa depan,
-      tetapi aku berharap kita masih bisa berbagi banyak cerita,
-      tertawa bersama, saling mendukung, dan menciptakan
-      kenangan indah lainnya.
-    </p>
-
-    <p>
-      Selamat ulang tahun, Sayang. Kamu berharga, kamu pantas
-      dicintai, dan aku bersyukur bisa mengenalmu.
+      Selamat ulang tahun, Sayang. Semoga kamu selalu dikelilingi
+      oleh cinta, tawa, dan hal-hal indah yang pantas kamu dapatkan.
+      Jangan lupa bahagia, ya? Kamu sangat berarti untukku.
     </p>
 
     <p class="signoff">
       With all my love,<br>
-      Dari seseorang yang menyayangimu sepenuh hati. ♥
+      Dari orang yang selalu mencintaimu ♥
     </p>
   </article>
 
-  <div class="letter-button">
-    <button class="btn" id="loveButton">Kirim Banyak Cinta ♥</button>
+  <div class="letter-actions">
+    <button class="btn" id="sendLove">Kirim Banyak Cinta ♥</button>
   </div>
 </section>
 
 <section class="closing" id="akhir">
-  <div class="big-heart">♥</div>
-
-  <h2>Terima kasih sudah hadir di hidupku, Sayang.</h2>
-
-  <p>
-    Semoga ulang tahun ini menjadi awal dari banyak
-    hal indah yang menantimu.
-  </p>
-
-  <p>Happy birthday, my favorite person. ♡</p>
-
+  <div class="heart">♥</div>
+  <h2>Terima kasih sudah menjadi bagian dari hidupku, Sayang.</h2>
+  <p>Semoga tahun ini menjadi tahun yang paling indah untukmu.</p>
+  <p>Dan semoga aku masih menjadi bagian dari banyak ulang tahunmu berikutnya. ♡</p>
   <div style="margin-top:25px">
     <button class="btn" id="backTop">♥ Kembali ke Awal</button>
   </div>
@@ -527,112 +572,325 @@ footer {
 </main>
 
 <footer>Made with love, just for you ♡</footer>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const music = document.getElementById("music");
-const statusText = document.getElementById("musicStatus");
-const playTop = document.getElementById("playTop");
-const playButton = document.getElementById("playButton");
+(() => {
+  "use strict";
 
-async function playMusic() {
-  try {
-    await music.play();
-    playTop.textContent = "Ⅱ Jeda Musik";
-    playButton.textContent = "Ⅱ Pause";
-    statusText.textContent = "Musik sedang diputar untuk Sayang. ❤️";
-  } catch (error) {
-    statusText.textContent =
-      "Autoplay diblokir browser. Sentuh tombol Play untuk memulai musik.";
+  // Playlist melodi instrumental yang dibuat oleh Web Audio API.
+  const tracks = [
+    {
+      title: "A Little Love for You",
+      desc: "Melodi kecil untuk seseorang yang berarti segalanya ♡",
+      chords: [261.63, 329.63, 392.00, 349.23],
+      melody: [523.25, 493.88, 440.00, 392.00, 440.00, 392.00, 329.63, 392.00]
+    },
+    {
+      title: "Midnight Romance",
+      desc: "Seperti malam yang tenang saat bersamamu 🌙",
+      chords: [220.00, 261.63, 329.63, 293.66],
+      melody: [440.00, 392.00, 349.23, 329.63, 392.00, 349.23, 293.66, 329.63]
+    },
+    {
+      title: "Forever & Always",
+      desc: "Semoga cerita kita terus berlanjut selamanya ♥",
+      chords: [293.66, 349.23, 440.00, 392.00],
+      melody: [587.33, 523.25, 493.88, 440.00, 493.88, 440.00, 392.00, 440.00]
+    },
+    {
+      title: "Birthday Wish",
+      desc: "Satu doa kecil untuk kebahagiaanmu ✨",
+      chords: [196.00, 246.94, 293.66, 261.63],
+      melody: [392.00, 440.00, 493.88, 440.00, 392.00, 349.23, 329.63, 392.00]
+    }
+  ];
+
+  let index = 0;
+  let audioCtx = null;
+  let master = null;
+  let timer = null;
+  let isPlaying = false;
+  let isRepeat = false;
+  let shuffled = false;
+  let startedAt = 0;
+  let elapsedBeforePause = 0;
+  let melodyTimer = null;
+  let chordTimer = null;
+  let step = 0;
+  let chordStep = 0;
+  const durationSeconds = 90;
+
+  const $ = id => document.getElementById(id);
+
+  function toast(message) {
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.add("show");
+    clearTimeout(toast.timeout);
+    toast.timeout = setTimeout(() => el.classList.remove("show"), 2500);
   }
-}
 
-function pauseMusic() {
-  music.pause();
-  playTop.textContent = "♫ Putar Musik";
-  playButton.textContent = "▶ Play";
-  statusText.textContent = "Musik dijeda. Tekan Play untuk melanjutkan.";
-}
-
-playTop.addEventListener("click", () => {
-  if (music.paused) playMusic();
-  else pauseMusic();
-});
-
-playButton.addEventListener("click", playMusic);
-
-document.getElementById("pauseButton").addEventListener("click", pauseMusic);
-
-document.getElementById("restartButton").addEventListener("click", () => {
-  music.currentTime = 0;
-  playMusic();
-});
-
-music.addEventListener("play", () => {
-  playTop.textContent = "Ⅱ Jeda Musik";
-  playButton.textContent = "Ⅱ Pause";
-});
-
-music.addEventListener("pause", () => {
-  playTop.textContent = "♫ Putar Musik";
-  playButton.textContent = "▶ Play";
-});
-
-music.addEventListener("error", () => {
-  statusText.textContent =
-    "File perfect.mp3 belum ditemukan. Letakkan file MP3 di folder yang sama dengan index.html.";
-});
-
-// Autoplay dicoba setelah halaman selesai dimuat.
-window.addEventListener("load", () => {
-  playMusic();
-});
-
-// Fallback saat interaksi pertama apabila autoplay ditolak.
-function firstInteraction() {
-  if (music.paused) playMusic();
-
-  document.removeEventListener("click", firstInteraction);
-  document.removeEventListener("touchstart", firstInteraction);
-  document.removeEventListener("keydown", firstInteraction);
-}
-
-document.addEventListener("click", firstInteraction);
-document.addEventListener("touchstart", firstInteraction);
-document.addEventListener("keydown", firstInteraction);
-
-document.getElementById("openLetter").addEventListener("click", () => {
-  document.getElementById("surat").scrollIntoView({ behavior: "smooth" });
-  makeHearts(18);
-});
-
-document.getElementById("loveButton").addEventListener("click", () => {
-  makeHearts(40);
-});
-
-document.getElementById("backTop").addEventListener("click", () => {
-  document.getElementById("home").scrollIntoView({ behavior: "smooth" });
-  makeHearts(20);
-});
-
-function makeHearts(count) {
-  const symbols = ["♥", "♡", "💗", "✨"];
-
-  for (let i = 0; i < count; i++) {
-    const heart = document.createElement("span");
-    heart.className = "heart";
-    heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (15 + Math.random() * 20) + "px";
-    heart.style.color = Math.random() > 0.5 ? "#ff8096" : "#ffbdc7";
-    heart.style.animationDuration = (3 + Math.random() * 4) + "s";
-
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7500);
+  function formatTime(seconds) {
+    const s = Math.max(0, Math.floor(seconds));
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
   }
-}
 
-setInterval(() => makeHearts(1), 1800);
+  function renderPlaylist() {
+    $("songs").innerHTML = "";
+    tracks.forEach((track, i) => {
+      const button = document.createElement("button");
+      button.className = "song" + (i === index ? " active" : "");
+      button.textContent = "♫  " + track.title;
+      button.addEventListener("click", () => {
+        index = i;
+        elapsedBeforePause = 0;
+        step = 0;
+        chordStep = 0;
+        renderTrack();
+        if (isPlaying) startAudioSequence();
+        else toast("Dipilih: " + track.title + " ♡");
+      });
+      $("songs").appendChild(button);
+    });
+  }
+
+  function renderTrack() {
+    const track = tracks[index];
+    $("trackTitle").textContent = track.title;
+    $("trackDesc").textContent = track.desc;
+    $("progress").value = 0;
+    $("currentTime").textContent = formatTime(elapsedBeforePause);
+    $("duration").textContent = formatTime(durationSeconds);
+    $("album").classList.toggle("playing", isPlaying);
+    $("playPause").textContent = isPlaying ? "Ⅱ" : "▶";
+    $("heroPlay").textContent = isPlaying ? "Ⅱ Jeda Musik" : "▶ Putar Musik";
+    renderPlaylist();
+  }
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) {
+        toast("Browser ini tidak mendukung audio. Coba browser terbaru.");
+        return false;
+      }
+      audioCtx = new AudioContextClass();
+      master = audioCtx.createGain();
+      master.gain.value = 0.18;
+      master.connect(audioCtx.destination);
+    }
+    return true;
+  }
+
+  function playNote(frequency, start, length, volume, type) {
+    if (!audioCtx || !master) return;
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    osc.type = type || "sine";
+    osc.frequency.setValueAtTime(frequency, start);
+
+    filter.type = "lowpass";
+    filter.frequency.value = 1800;
+
+    gain.gain.setValueAtTime(0.001, start);
+    gain.gain.linearRampToValueAtTime(volume, start + 0.06);
+    gain.gain.setValueAtTime(volume, start + length * 0.45);
+    gain.gain.exponentialRampToValueAtTime(0.001, start + length);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(master);
+
+    osc.start(start);
+    osc.stop(start + length + 0.04);
+  }
+
+  function stopSequences() {
+    clearInterval(melodyTimer);
+    clearInterval(chordTimer);
+    melodyTimer = null;
+    chordTimer = null;
+  }
+
+  function startAudioSequence() {
+    stopSequences();
+    if (!initAudio()) return;
+
+    const track = tracks[index];
+    step = 0;
+    chordStep = 0;
+
+    function melodyTick() {
+      if (!isPlaying || !audioCtx) return;
+      const now = audioCtx.currentTime;
+      const note = track.melody[step % track.melody.length];
+      playNote(note, now, 1.05, 0.18, "sine");
+
+      // Nada harmoni lembut.
+      if (step % 2 === 0) {
+        playNote(note / 2, now, 1.35, 0.09, "triangle");
+      }
+      step++;
+    }
+
+    function chordTick() {
+      if (!isPlaying || !audioCtx) return;
+      const now = audioCtx.currentTime;
+      const root = track.chords[chordStep % track.chords.length];
+      playNote(root, now, 2.8, 0.10, "triangle");
+      playNote(root * 1.5, now + 0.12, 2.5, 0.045, "sine");
+      playNote(root * 2, now + 0.24, 2.2, 0.025, "sine");
+      chordStep++;
+    }
+
+    melodyTick();
+    chordTick();
+    melodyTimer = setInterval(melodyTick, 650);
+    chordTimer = setInterval(chordTick, 2600);
+  }
+
+  async function play() {
+    if (!initAudio()) return;
+    try {
+      await audioCtx.resume();
+      isPlaying = true;
+      startedAt = Date.now();
+      startAudioSequence();
+      renderTrack();
+      toast("Musik romantis diputar untuk Sayang ♡");
+    } catch (error) {
+      isPlaying = false;
+      toast("Musik tidak dapat diputar. Coba tekan sekali lagi.");
+    }
+  }
+
+  function pause() {
+    if (isPlaying) {
+      elapsedBeforePause += (Date.now() - startedAt) / 1000;
+    }
+    isPlaying = false;
+    stopSequences();
+    renderTrack();
+  }
+
+  function togglePlay() {
+    if (isPlaying) pause();
+    else play();
+  }
+
+  function nextTrack() {
+    index = shuffled
+      ? Math.floor(Math.random() * tracks.length)
+      : (index + 1) % tracks.length;
+    elapsedBeforePause = 0;
+    renderTrack();
+    if (isPlaying) startAudioSequence();
+  }
+
+  function previousTrack() {
+    if (elapsedBeforePause > 3) {
+      elapsedBeforePause = 0;
+    } else {
+      index = (index - 1 + tracks.length) % tracks.length;
+      elapsedBeforePause = 0;
+    }
+    renderTrack();
+    if (isPlaying) startAudioSequence();
+  }
+
+  $("heroPlay").addEventListener("click", togglePlay);
+  $("playPause").addEventListener("click", togglePlay);
+  $("next").addEventListener("click", nextTrack);
+  $("previous").addEventListener("click", previousTrack);
+
+  $("shuffle").addEventListener("click", () => {
+    shuffled = !shuffled;
+    $("shuffle").style.color = shuffled ? "#ffffff" : "";
+    toast(shuffled ? "Mode acak aktif ♡" : "Mode urutan normal");
+  });
+
+  $("repeat").addEventListener("click", () => {
+    isRepeat = !isRepeat;
+    $("repeat").style.color = isRepeat ? "#ffffff" : "";
+    toast(isRepeat ? "Mode ulang aktif ♡" : "Mode ulang nonaktif");
+  });
+
+  $("progress").addEventListener("input", event => {
+    const pct = Number(event.target.value) / 100;
+    elapsedBeforePause = pct * durationSeconds;
+    if (isPlaying) startedAt = Date.now();
+    $("currentTime").textContent = formatTime(elapsedBeforePause);
+  });
+
+  // Pembaruan waktu pemutar.
+  timer = setInterval(() => {
+    if (!isPlaying) return;
+
+    const elapsed = elapsedBeforePause + (Date.now() - startedAt) / 1000;
+
+    if (elapsed >= durationSeconds) {
+      if (isRepeat) {
+        elapsedBeforePause = 0;
+        startedAt = Date.now();
+        startAudioSequence();
+      } else {
+        elapsedBeforePause = 0;
+        isPlaying = false;
+        stopSequences();
+        nextTrack();
+        renderTrack();
+        return;
+      }
+    }
+
+    const current = Math.min(elapsed, durationSeconds);
+    $("progress").value = current / durationSeconds * 100;
+    $("currentTime").textContent = formatTime(current);
+  }, 250);
+
+  // Hati yang terbang.
+  function burstHearts(amount = 22) {
+    const emojis = ["♥", "♡", "💗", "✦"];
+    for (let i = 0; i < amount; i++) {
+      const heart = document.createElement("span");
+      heart.className = "floating-heart";
+      heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (14 + Math.random() * 22) + "px";
+      heart.style.color = Math.random() > .5 ? "#f17a8b" : "#ffb5bc";
+      heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7200);
+    }
+  }
+
+  $("openLetter").addEventListener("click", () => {
+    $("surat").scrollIntoView({ behavior: "smooth" });
+    burstHearts(18);
+  });
+
+  $("sendLove").addEventListener("click", () => {
+    burstHearts(45);
+    toast("Banyak cinta dan peluk virtual buat Sayang! ❤️");
+  });
+
+  $("backTop").addEventListener("click", () => {
+    $("home").scrollIntoView({ behavior: "smooth" });
+    burstHearts(15);
+  });
+
+  setInterval(() => {
+    if (Math.random() > .35) burstHearts(1);
+  }, 2200);
+
+  renderTrack();
+})();
 </script>
 
 </body>
 </html>
+</final>
