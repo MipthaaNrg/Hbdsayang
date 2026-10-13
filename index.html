@@ -371,76 +371,57 @@ footer{
     }
   }
 
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player("youtubePlayer", {
-      width: "200",
-      height: "113",
-      videoId: VIDEO_ID,
-      playerVars: {
-        autoplay: 1,
-        controls: 1,
-        playsinline: 1,
-        rel: 0,
-        enablejsapi: 1
+  
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("youtubePlayer", {
+    width: "200",
+    height: "113",
+    videoId: VIDEO_ID,
+    playerVars: {
+      autoplay: 1,
+      controls: 1,
+      playsinline: 1,
+      rel: 0,
+      enablejsapi: 1
+    },
+    events: {
+      onReady: function(event) {
+        ready = true;
+        status("Sentuh layar untuk memutar musik ♡");
       },
-      events: {
-        onReady: function(event) {
-          ready = true;
-          status("Musik siap. Jika belum berbunyi, tekan Putar Musik ♡");
-
-          // Percobaan autoplay tanpa suara.
-          // Browser boleh menolak permintaan ini.
-          event.target.mute();
-          event.target.setVolume(80);
-          event.target.playVideo();
-          autoplayStarted = true;
-        },
-
-        onStateChange: function(event) {
-          if (event.data === YT.PlayerState.PLAYING) {
-            updateUI(true);
-
-            if (soundEnabledByUser) {
-              player.unMute();
-              status("Cincin — Hindia sedang diputar ❤️");
-            } else {
-              player.mute();
-              status("Musik mulai diputar tanpa suara. Tekan Putar Musik untuk menyalakan suara.");
-            }
-          }
-
-          if (event.data === YT.PlayerState.PAUSED) {
-            updateUI(false);
-            status("Musik dijeda.");
-          }
-
-          if (event.data === YT.PlayerState.ENDED) {
-            if (repeat) {
-              player.seekTo(0, true);
-              player.playVideo();
-            } else {
-              updateUI(false);
-              status("Lagu selesai. Tekan Putar Musik untuk mendengarkan lagi.");
-            }
-          }
-        },
-
-        onError: function(event) {
-          updateUI(false);
-          const messages = {
-            2: "ID video tidak valid.",
-            5: "Video tidak dapat diputar di pemutar ini.",
-            100: "Video tidak ditemukan atau sudah dihapus.",
-            101: "Video ini tidak mengizinkan pemutaran melalui embed.",
-            150: "Video ini tidak mengizinkan pemutaran melalui embed."
-          };
-
-          status(messages[event.data] || "Gagal memutar video YouTube.");
-          toast(messages[event.data] || "Periksa koneksi internet.");
+      onStateChange: function(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+          status("Musik sedang diputar ♡");
         }
+      },
+      onError: function(event) {
+        status("Musik gagal diputar. Periksa ID video YouTube.");
       }
-    });
-  }
+    }
+  });
+}
+
+// Putar musik saat sentuhan pertama di layar
+function playMusicOnFirstTouch() {
+  if (!ready || !player) return;
+
+  player.playVideo();
+
+  // Hapus listener setelah sentuhan pertama
+  document.removeEventListener("touchstart", playMusicOnFirstTouch);
+  document.removeEventListener("click", playMusicOnFirstTouch);
+
+  status("Musik sedang dimulai ♡");
+}
+
+document.addEventListener("touchstart", playMusicOnFirstTouch, {
+  once: true,
+  passive: true
+});
+
+document.addEventListener("click", playMusicOnFirstTouch, {
+  once: true
+});
 
   window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
