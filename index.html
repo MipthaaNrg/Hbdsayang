@@ -533,10 +533,13 @@
   // di wilayahmu atau ID videonya berubah.
   const VIDEO_ID = "2Vv-BfVoq4g";
 
+
+
   let player = null;
-  let apiReady = false;
-  let playRequested = false;
-  let toastTimer;
+let apiReady = false;
+let playRequested = false;
+let toastTimer;
+let audioUnlocked = false;
 
   const $ = id => document.getElementById(id);
 
@@ -547,6 +550,30 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
   }
+
+  function unlockMusicAudio() {
+  if (!apiReady || !player || audioUnlocked) return;
+
+  audioUnlocked = true;
+
+  try {
+    player.unMute();
+    player.setVolume(70);
+    player.playVideo();
+
+    setStatus("Musik diputar untuk Sayang ❤️");
+  } catch (error) {
+    audioUnlocked = false;
+    setStatus("Tekan tombol Play untuk memulai musik ❤️");
+  }
+
+  document.removeEventListener("pointerdown", unlockMusicAudio, true);
+  document.removeEventListener("keydown", unlockMusicAudio, true);
+}
+
+// Interaksi pertama pengunjung digunakan untuk mengaktifkan suara.
+document.addEventListener("pointerdown", unlockMusicAudio, true);
+document.addEventListener("keydown", unlockMusicAudio, true);
 
   function setStatus(message) {
     $("musicStatus").textContent = message;
@@ -649,20 +676,25 @@
 
       events: {
         onReady: function (event) {
-          apiReady = true;
-          event.target.setVolume(70);
+  apiReady = true;
 
-          // Coba autoplay. Browser boleh menolaknya.
-          event.target.playVideo();
-          setStatus(
-            "Mencoba memutar Perfect — Ed Sheeran secara otomatis..."
-          );
+  // Coba autoplay dalam keadaan mute agar lebih kompatibel
+  // dengan kebijakan autoplay browser.
+  event.target.mute();
+  event.target.setVolume(70);
+  event.target.playVideo();
 
-          // Jika pengunjung sudah menekan tombol ketika API dimuat.
-          if (playRequested) {
-            event.target.playVideo();
-          }
-        },
+  setStatus(
+    "Menyiapkan lagu Perfect untuk Sayang ❤️"
+  );
+
+  // Jika pengunjung sudah menekan tombol Play sebelumnya,
+  // coba putar lagu dengan suara.
+  if (playRequested) {
+    event.target.unMute();
+    event.target.playVideo();
+  }
+},
 
         onStateChange: function (event) {
           if (event.data === YT.PlayerState.PLAYING) {
