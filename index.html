@@ -12,7 +12,6 @@
 
   <style>
     :root {
-      --bg: #100910;
       --pink: #ff719a;
       --light: #ffe0e9;
       --muted: #c9aebc;
@@ -118,14 +117,14 @@
       transform: scale(.97);
     }
 
-    .btn-outline {
-      background: rgba(255,255,255,.04);
-      box-shadow: none;
+    .btn:disabled {
+      opacity: .75;
+      cursor: default;
     }
 
     .music-control {
       position: fixed;
-      z-index: 20;
+      z-index: 100;
       right: 16px;
       bottom: 16px;
       max-width: calc(100vw - 32px);
@@ -135,12 +134,14 @@
       padding: 10px 14px;
       border: 1px solid #ff719a55;
       border-radius: 999px;
-      background: rgba(22,10,22,.92);
+      background: rgba(22,10,22,.95);
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 30px #0005;
     }
 
     .music-control button {
+      min-width: 32px;
+      min-height: 32px;
       border: none;
       background: transparent;
       color: white;
@@ -253,14 +254,21 @@
       animation: twinkle 2s infinite alternate;
     }
 
-    #youtube-player {
+    /* Pemutar tetap tersedia, tetapi tidak mengganggu tampilan. */
+    #vimeo-container {
       position: fixed;
-      width: 1px;
-      height: 1px;
-      left: -100px;
-      bottom: 0;
+      width: 320px;
+      height: 180px;
+      left: -10000px;
+      top: 0;
       overflow: hidden;
       pointer-events: none;
+    }
+
+    #vimeo-iframe {
+      width: 320px;
+      height: 180px;
+      border: 0;
     }
 
     @keyframes heartbeat {
@@ -288,11 +296,27 @@
     }
 
     @media (max-width: 480px) {
-      .eyebrow { letter-spacing: 2.5px; font-size: .67rem; }
-      .subtitle { font-size: .84rem; }
-      section { padding: 65px 18px; }
-      .letter-card { font-size: .85rem; }
-      .music-control { right: 10px; bottom: 10px; }
+      .eyebrow {
+        letter-spacing: 2.5px;
+        font-size: .67rem;
+      }
+
+      .subtitle {
+        font-size: .84rem;
+      }
+
+      section {
+        padding: 65px 18px;
+      }
+
+      .letter-card {
+        font-size: .85rem;
+      }
+
+      .music-control {
+        right: 10px;
+        bottom: 10px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -306,25 +330,26 @@
 </head>
 
 <body>
-  <!-- Pemutar YouTube dikendalikan lewat IFrame API -->
-  <!-- Pemutar video lirik Vimeo -->
-<div class="music-control">
-  <button id="music-button" type="button" aria-label="Putar musik">♫</button>
-  <div class="music-label">
-    <span id="music-status">Putar lagu cinta</span>
-    <small>A Thousand Years · Christina Perri</small>
+
+  <!-- Tombol musik -->
+  <div class="music-control">
+    <button id="music-button" type="button" aria-label="Putar musik">♫</button>
+    <div class="music-label">
+      <span id="music-status">Menyiapkan musik...</span>
+      <small>A Thousand Years · Christina Perri</small>
+    </div>
   </div>
-</div>
 
-<div id="vimeo-player" style="
-  position:fixed;
-  width:1px;
-  height:1px;
-  left:-100px;
-  bottom:0;
-  overflow:hidden;
-"></div>
-
+  <!-- Pemutar Vimeo -->
+  <div id="vimeo-container" aria-hidden="true">
+    <iframe
+      id="vimeo-iframe"
+      src="https://player.vimeo.com/video/65816784?autoplay=0&muted=0&controls=0&title=0&byline=0&portrait=0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      title="A Thousand Years - Christina Perri"
+      allowfullscreen>
+    </iframe>
+  </div>
 
   <main>
     <header class="hero" id="home">
@@ -337,13 +362,16 @@
         <p class="eyebrow">A little surprise, just for you</p>
         <h1>Happy Birthday</h1>
         <div class="heart-main">♥</div>
+
         <h2 style="font-size:1.3rem;font-weight:500;color:#ffe0e9">
           Rizky Okta Sayang
         </h2>
+
         <p class="subtitle">
           Hari spesial untuk seseorang yang membuat<br>
           dunia terasa jauh lebih indah. ✨
         </p>
+
         <div style="margin-top:30px">
           <button class="btn" type="button"
             onclick="document.getElementById('letter').scrollIntoView({behavior:'smooth'})">
@@ -357,12 +385,13 @@
       <div class="section-inner">
         <p class="eyebrow">From my heart to yours</p>
         <h2 class="section-title">Untuk Sayangku</h2>
+
         <p class="section-desc">
           Ada sesuatu yang ingin aku sampaikan di hari spesialmu.
         </p>
 
         <article class="letter-card">
-          <p>Untuk Rizky Okta, sayangku yang paling ❤️</p>
+          <p>Untuk Rizky Okta, sayangku yang paling istimewa ❤️</p>
 
           <p>
             Selamat ulang tahun, cintaku. Semoga hari ini dipenuhi
@@ -405,15 +434,18 @@
       <div class="section-inner">
         <p class="eyebrow">One more little thing</p>
         <h2 class="section-title">A Wish For You</h2>
+
         <p class="section-desc">
           Ada satu pesan kecil lagi yang khusus aku siapkan untukmu.
         </p>
 
         <div class="surprise-box">
           <div style="font-size:2.5rem;margin-bottom:16px">🎁</div>
+
           <p style="color:#ffe0e9;margin-bottom:22px">
             Siap membuka kejutan kecilmu?
           </p>
+
           <button class="btn" id="surprise-button" type="button"
             onclick="showSurprise()">
             Buka kejutan ✨
@@ -421,25 +453,25 @@
 
           <div id="surprise-message">
             <p style="font-size:1.8rem;margin-bottom:10px">💗</p>
+
             <p>
               Semoga tahun ini membawa lebih banyak kebahagiaan,
               keberanian untuk mengejar impian, dan cinta yang selalu
               terasa hangat.
             </p>
+
             <p style="margin-top:14px">
               Dan kalau boleh aku berharap satu hal lagi:
               semoga kita bisa terus berbagi banyak ulang tahun
               dan kenangan indah bersama.
             </p>
+
             <p style="margin-top:18px;color:#ff9fbd">
               I love you, Sayang. Happy birthday! ❤️
             </p>
           </div>
         </div>
       </div>
-
-
-
     </section>
   </main>
 
@@ -447,222 +479,90 @@
     Dibuat dengan cinta, khusus untuk Rizky Okta Sayang ♥
   </footer>
 
+  <!-- Vimeo Player API -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
   <script>
-
-  
-<script src="https://player.vimeo.com/api/player.js"></script>
-<script>
-  const VIMEO_VIDEO_ID = 65816784;
-
-  const musicButton = document.getElementById("music-button");
-  const musicStatus = document.getElementById("music-status");
-
-  const iframe = document.createElement("iframe");
-  iframe.src =
-    "https://player.vimeo.com/video/" +
-    VIMEO_VIDEO_ID +
-    "?autoplay=0&muted=0&controls=0&title=0&byline=0&portrait=0";
-
-  iframe.allow = "autoplay; fullscreen; picture-in-picture";
-  iframe.title = "A Thousand Years - Christina Perri";
-  iframe.setAttribute("allowfullscreen", "");
-
-  document.getElementById("vimeo-player").appendChild(iframe);
-
-  const player = new Vimeo.Player(iframe);
-
-  let playing = false;
-
-  musicButton.addEventListener("click", async () => {
-    try {
-      if (playing) {
-        await player.pause();
-        playing = false;
-        musicButton.textContent = "♫";
-        musicStatus.textContent = "Musik dijeda";
-      } else {
-        await player.setCurrentTime(0);
-        await player.setVolume(1);
-        await player.play();
-
-        playing = true;
-        musicButton.textContent = "Ⅱ";
-        musicStatus.textContent = "Now playing ♥";
-      }
-    } catch (error) {
-      musicStatus.textContent = "Tidak dapat memutar video";
-      console.error("Vimeo playback error:", error);
-    }
-  });
-
-  player.on("ended", () => {
-    playing = false;
-    musicButton.textContent = "♫";
-    musicStatus.textContent = "Lagu selesai";
-  });
-
-  player.on("pause", () => {
-    playing = false;
-    musicButton.textContent = "♫";
-    musicStatus.textContent = "Musik dijeda";
-  });
-
-  player.on("play", () => {
-    playing = true;
-    musicButton.textContent = "Ⅱ";
-    musicStatus.textContent = "Now playing ♥";
-  });
-
-    // Official music video: Christina Perri - A Thousand Years
-    const VIDEO_ID = "rtOvBOTyX00";
-
-    // Titik mulai perkiraan bagian vokal pada video resmi.
-    // Ubah ke 19 atau 21 jika versi video yang dipakai sedikit berbeda.
-    const START_SECONDS = 0;
-
-    let player;
-    let playerReady = false;
-    let musicPlaying = false;
-    let playRequested = false;
-
     const musicButton = document.getElementById("music-button");
     const musicStatus = document.getElementById("music-status");
+    const iframe = document.getElementById("vimeo-iframe");
 
-    // Muat YouTube IFrame Player API.
-    (function loadYouTubeAPI() {
-      if (document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-        return;
-      }
+    const player = new Vimeo.Player(iframe);
 
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.head.appendChild(tag);
-    })();
+    let isPlaying = false;
+    let playerReady = false;
+    let autoplayAttempted = false;
 
-    // Dipanggil otomatis oleh YouTube IFrame API.
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player("youtube-player", {
-        width: "1",
-        height: "1",
-        videoId: VIDEO_ID,
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          start: START_SECONDS,
-          playsinline: 1,
-          rel: 0
-        },
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange,
-          onError: onPlayerError
-        }
-      });
-    }
-
-    function onPlayerReady(event) {
+    // Siapkan player terlebih dahulu.
+    player.ready().then(() => {
       playerReady = true;
+      musicStatus.textContent = "Mencoba memutar musik...";
+      tryAutoplay();
+    }).catch((error) => {
+      musicStatus.textContent = "Tekan ♫ untuk mencoba";
+      console.error("Vimeo belum siap:", error);
+    });
 
-      // Siapkan video di titik mulai vokal tanpa memulai suara otomatis.
-      event.target.cueVideoById({
-        videoId: VIDEO_ID,
-        startSeconds: START_SECONDS
-      });
+    // Percobaan autoplay. Browser boleh menolaknya.
+    async function tryAutoplay() {
+      if (!playerReady || autoplayAttempted) return;
 
-      musicStatus.textContent = "Putar lagu cinta";
-      musicButton.textContent = "♫";
-
-      // Jika tombol ditekan sebelum player siap, lanjutkan setelah siap.
-      if (playRequested) {
-        startMusic();
-      }
-    }
-
-    function startMusic() {
-      playRequested = true;
-
-      if (!playerReady || !player) {
-        musicStatus.textContent = "Menyiapkan lagu…";
-        return;
-      }
+      autoplayAttempted = true;
 
       try {
-        // Muat langsung pada posisi vokal, lalu putar.
-        player.loadVideoById({
-          videoId: VIDEO_ID,
-          startSeconds: START_SECONDS
-        });
+        await player.setCurrentTime(0);
+        await player.play();
 
-        // Dipanggil dari aksi klik pengguna agar lebih kompatibel di iPhone.
-        player.unMute();
-        player.playVideo();
-
-        musicStatus.textContent = "Memulai lagu…";
+        isPlaying = true;
+        musicButton.textContent = "Ⅱ";
+        musicStatus.textContent = "Now playing ♥";
       } catch (error) {
-        musicStatus.textContent = "Tekan untuk mencoba lagi";
+        isPlaying = false;
+        musicButton.textContent = "♫";
+        musicStatus.textContent = "Tekan ♫ untuk memutar";
+        console.log("Autoplay ditolak browser:", error);
       }
     }
 
-    function stopMusic() {
-      if (playerReady && player) {
-        player.pauseVideo();
-      }
+    // Tombol musik untuk browser yang menolak autoplay.
+    musicButton.addEventListener("click", async () => {
+      try {
+        if (!playerReady) {
+          musicStatus.textContent = "Menyiapkan musik...";
+          await player.ready();
+          playerReady = true;
+        }
 
-      musicPlaying = false;
-      playRequested = false;
-      musicButton.textContent = "♫";
-      musicStatus.textContent = "Musik dijeda";
-    }
-
-    musicButton.addEventListener("click", function () {
-      if (musicPlaying) {
-        stopMusic();
-      } else {
-        startMusic();
+        if (isPlaying) {
+          await player.pause();
+        } else {
+          await player.play();
+        }
+      } catch (error) {
+        musicStatus.textContent = "Video tidak dapat diputar";
+        console.error("Gagal memutar Vimeo:", error);
       }
     });
 
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.PLAYING) {
-        musicPlaying = true;
-        musicButton.textContent = "Ⅱ";
-        musicStatus.textContent = "Now playing ♥";
+    player.on("play", () => {
+      isPlaying = true;
+      musicButton.textContent = "Ⅱ";
+      musicStatus.textContent = "Now playing ♥";
+    });
 
-        // Koreksi posisi jika player ternyata mulai terlalu awal.
-        const currentTime = player.getCurrentTime();
-
-        if (currentTime < START_SECONDS - 2) {
-          player.seekTo(START_SECONDS, true);
-        }
-      }
-
-      if (event.data === YT.PlayerState.PAUSED) {
-        musicPlaying = false;
-        musicButton.textContent = "♫";
-        musicStatus.textContent = "Musik dijeda";
-      }
-
-      if (event.data === YT.PlayerState.ENDED) {
-        musicPlaying = false;
-        musicButton.textContent = "♫";
-        musicStatus.textContent = "Lagu selesai";
-      }
-
-      if (event.data === YT.PlayerState.CUED) {
-        // Video sudah siap pada titik mulai yang dipilih.
-        if (!playRequested) {
-          musicStatus.textContent = "Putar lagu cinta";
-        }
-      }
-    }
-
-    function onPlayerError() {
-      musicPlaying = false;
+    player.on("pause", () => {
+      isPlaying = false;
       musicButton.textContent = "♫";
-      musicStatus.textContent = "Lagu tidak tersedia";
-    }
+      musicStatus.textContent = "Musik dijeda";
+    });
 
-    // Kejutan surat.
+    player.on("ended", () => {
+      isPlaying = false;
+      musicButton.textContent = "♫";
+      musicStatus.textContent = "Lagu selesai";
+    });
+
+    // Kejutan ulang tahun.
     function showSurprise() {
       const message = document.getElementById("surprise-message");
       const button = document.getElementById("surprise-button");
@@ -676,7 +576,7 @@
       }
     }
 
-    // Hati melayang.
+    // Animasi hati melayang.
     const heartSymbols = ["♥", "♡", "❤", "💕"];
 
     function createHeart() {
@@ -687,16 +587,15 @@
 
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.fontSize = (14 + Math.random() * 24) + "px";
-      heart.style.color = Math.random() > .5 ? "#ff719a" : "#ffc6da";
+      heart.style.color = Math.random() > 0.5 ? "#ff719a" : "#ffc6da";
       heart.style.animationDuration = (5 + Math.random() * 5) + "s";
 
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 11000);
     }
 
-    // Batasi frekuensi animasi agar tidak terlalu berat di HP.
     setInterval(createHeart, 900);
   </script>
+
 </body>
 </html>
