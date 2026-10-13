@@ -529,82 +529,126 @@
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-  // ID video resmi yang dituju. Ganti jika video tidak tersedia
-  // di wilayahmu atau ID videonya berubah.
+(() => {
+  "use strict";
+
+  // ==============================
+  // KONFIGURASI MUSIK
+  // ==============================
   const VIDEO_ID = "2Vv-BfVoq4g";
-
-
+  const START_SECONDS = 24;
+  const MUSIC_VOLUME = 70;
 
   let player = null;
-let apiReady = false;
-let playRequested = false;
-let toastTimer;
-let audioUnlocked = false;
+  let apiReady = false;
+  let playRequested = false;
+  let userInteracted = false;
+  let toastTimer = null;
+  let heartTimer = null;
 
-  const $ = id => document.getElementById(id);
+  const $ = (id) => document.getElementById(id);
+
+  // ==============================
+  // STATUS DAN NOTIFIKASI
+  // ==============================
+  function setStatus(message) {
+    const status = $("musicStatus");
+    if (status) status.textContent = message;
+  }
 
   function showToast(message) {
     const toast = $("toast");
+    if (!toast) return;
+
     toast.textContent = message;
     toast.classList.add("show");
+
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
-  }
-
-  function unlockMusicAudio() {
-  if (!apiReady || !player || audioUnlocked) return;
-
-  audioUnlocked = true;
-
-  try {
-    player.unMute();
-    player.setVolume(70);
-    player.playVideo();
-
-    setStatus("Musik diputar untuk Sayang ❤️");
-  } catch (error) {
-    audioUnlocked = false;
-    setStatus("Tekan tombol Play untuk memulai musik ❤️");
-  }
-
-  document.removeEventListener("pointerdown", unlockMusicAudio, true);
-  document.removeEventListener("keydown", unlockMusicAudio, true);
-}
-
-// Interaksi pertama pengunjung digunakan untuk mengaktifkan suara.
-document.addEventListener("pointerdown", unlockMusicAudio, true);
-document.addEventListener("keydown", unlockMusicAudio, true);
-
-  function setStatus(message) {
-    $("musicStatus").textContent = message;
+    toastTimer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2800);
   }
 
   function updateButtons(playing) {
-    $("heroPlay").textContent = playing
-      ? "Ⅱ Jeda Musik"
-      : "♫ Putar Musik";
+    const heroButton = $("heroPlay");
+    const playButton = $("playButton");
 
-    $("playButton").textContent = playing
-      ? "Ⅱ Sedang Diputar"
-      : "▶ Play";
+    if (heroButton) {
+      heroButton.textContent = playing
+        ? "Ⅱ Jeda Musik"
+        : "♫ Putar Musik";
+    }
+
+    if (playButton) {
+      playButton.textContent = playing
+        ? "Ⅱ Sedang Diputar"
+        : "▶ Play";
+    }
   }
 
+  function getPlayerState() {
+    if (!apiReady || !player || !window.YT) return -1;
+    return player.getPlayerState();
+  }
+
+  // ==============================
+  // MEMULAI MUSIK
+  // ==============================
   function playMusic() {
+    playRequested = true;
+    userInteracted = true;
+
     if (!apiReady || !player) {
-      playRequested = true;
-      setStatus("Pemutar sedang dimuat. Tunggu sebentar, ya ❤️");
+      setStatus("Menyiapkan pemutar musik... ❤️");
       return;
     }
 
-    playRequested = true;
-    player.playVideo();
-    setStatus("Meminta YouTube memutar lagu untuk Sayang...");
+    try {
+      player.unMute();
+      player.setVolume(MUSIC_VOLUME);
+
+      const state = getPlayerState();
+
+      // Jika video berhenti atau selesai, muat ulang
+      // langsung dari detik ke-24.
+      if (
+        state === YT.PlayerState.ENDED ||
+        state === YT.PlayerState.UNSTARTED ||
+        state === YT.PlayerState.CUED
+      ) {
+        player.loadVideoById({
+          videoId: VIDEO_ID,
+          startSeconds: START_SECONDS,
+          suggestedQuality: "large"
+        });
+      } else {
+        // Pastikan posisi lagu tidak kembali ke awal.
+        const currentTime = player.getCurrentTime();
+
+        if (
+          !Number.isFinite(currentTime) ||
+          currentTime < START_SECONDS
+        ) {
+          player.seekTo(START_SECONDS, true);
+        }
+
+        player.playVideo();
+      }
+
+      setStatus("Memutar Perfect mulai dari 0:24 ❤️");
+    } catch (error) {
+      setStatus("Gagal memulai musik. Tekan Play sekali lagi.");
+      console.error("Gagal memutar musik:", error);
+    }
   }
 
+  // ==============================
+  // PAUSE
+  // ==============================
   function pauseMusic() {
     playRequested = false;
 
-    if (player && apiReady) {
+    if (apiReady && player) {
       player.pauseVideo();
     }
 
@@ -612,55 +656,83 @@ document.addEventListener("keydown", unlockMusicAudio, true);
     setStatus("Musik dijeda. Tekan Play untuk melanjutkan.");
   }
 
+  // ==============================
+  // ULANG DARI DETIK KE-24
+  // ==============================
   function restartMusic() {
-  playRequested = true;
+    playRequested = true;
+    userInteracted = true;
 
-  if (player && apiReady) {
-    player.seekTo(24, true);
-    player.playVideo();
-    setStatus("Memutar Perfect mulai dari 0:24 untuk Sayang ❤️");
-  } else {
-    setStatus("Pemutar masih dimuat. Coba lagi sebentar.");
-  }
-}
-
-  $("heroPlay").addEventListener("click", () => {
     if (!apiReady || !player) {
-      playMusic();
+      setStatus("Pemutar masih dimuat. Coba lagi sebentar.");
       return;
     }
 
-    const state = player.getPlayerState();
+    try {
+      player.unMute();
+      player.setVolume(MUSIC_VOLUME);
 
-    if (state === YT.PlayerState.PLAYING ||
-        state === YT.PlayerState.BUFFERING) {
+      // Muat video pada posisi 0:24.
+      // Ini lebih andal daripada hanya seekTo(0).
+      player.loadVideoById({
+        videoId: VIDEO_ID,
+        startSeconds: START_SECONDS,
+        suggestedQuality: "large"
+      });
+
+      setStatus("Memulai ulang lagu dari 0:24 ❤️");
+    } catch (error) {
+      console.error("Gagal mengulang lagu:", error);
+      setStatus("Gagal mengulang lagu. Coba tekan Play.");
+    }
+  }
+
+  // ==============================
+  // TOMBOL MUSIK
+  // ==============================
+  $("heroPlay")?.addEventListener("click", () => {
+    userInteracted = true;
+
+    const state = getPlayerState();
+
+    if (
+      state === YT.PlayerState.PLAYING ||
+      state === YT.PlayerState.BUFFERING
+    ) {
       pauseMusic();
     } else {
       playMusic();
     }
   });
 
-  $("playButton").addEventListener("click", playMusic);
-  $("pauseButton").addEventListener("click", pauseMusic);
-  $("restartButton").addEventListener("click", restartMusic);
+  $("playButton")?.addEventListener("click", playMusic);
+  $("pauseButton")?.addEventListener("click", pauseMusic);
+  $("restartButton")?.addEventListener("click", restartMusic);
 
-  $("openLetter").addEventListener("click", () => {
-    $("surat").scrollIntoView({ behavior: "smooth" });
+  // ==============================
+  // SURAT CINTA
+  // ==============================
+  $("openLetter")?.addEventListener("click", () => {
+    $("surat")?.scrollIntoView({ behavior: "smooth" });
     makeHearts(18);
   });
 
-  $("loveButton").addEventListener("click", () => {
+  $("loveButton")?.addEventListener("click", () => {
     makeHearts(40);
     showToast("Banyak cinta dan peluk virtual buat Sayang! ❤️");
   });
 
-  $("backTop").addEventListener("click", () => {
-    $("home").scrollIntoView({ behavior: "smooth" });
+  $("backTop")?.addEventListener("click", () => {
+    $("home")?.scrollIntoView({ behavior: "smooth" });
     makeHearts(20);
   });
 
-  // Fungsi ini dipanggil oleh YouTube IFrame API.
+  // ==============================
+  // YOUTUBE PLAYER API
+  // ==============================
   window.onYouTubeIframeAPIReady = function () {
+    if (player) return;
+
     player = new YT.Player("ytplayer", {
       width: "560",
       height: "315",
@@ -670,111 +742,190 @@ document.addEventListener("keydown", unlockMusicAudio, true);
         autoplay: 1,
         controls: 1,
         playsinline: 1,
-        enablejsapi: 1,
-        rel: 0
-          start: 24
+        rel: 0,
+        start: START_SECONDS,
+        enablejsapi: 1
       },
 
       events: {
         onReady: function (event) {
-  apiReady = true;
+          apiReady = true;
 
-  // Coba autoplay dalam keadaan mute agar lebih kompatibel
-  // dengan kebijakan autoplay browser.
-  event.target.mute();
-  event.target.setVolume(70);
-  event.target.playVideo();
+          try {
+            event.target.setVolume(MUSIC_VOLUME);
 
-  setStatus(
-    "Menyiapkan lagu Perfect untuk Sayang ❤️"
-  );
+            // Coba autoplay tanpa suara dahulu.
+            // Browser sering mengizinkan autoplay muted.
+            event.target.mute();
 
-  // Jika pengunjung sudah menekan tombol Play sebelumnya,
-  // coba putar lagu dengan suara.
-  if (playRequested) {
-    event.target.unMute();
-    event.target.playVideo();
-  }
-},
+            event.target.loadVideoById({
+              videoId: VIDEO_ID,
+              startSeconds: START_SECONDS,
+              suggestedQuality: "large"
+            });
+
+            setStatus(
+              "Mencoba memutar Perfect dari 0:24 untuk Sayang ❤️"
+            );
+
+            // Jika pengunjung sudah menekan tombol,
+            // lanjutkan dengan suara aktif.
+            if (playRequested || userInteracted) {
+              event.target.unMute();
+              event.target.setVolume(MUSIC_VOLUME);
+              event.target.playVideo();
+            }
+          } catch (error) {
+            console.error("Inisialisasi musik gagal:", error);
+            setStatus("Tekan tombol Play untuk memulai musik ❤️");
+          }
+        },
 
         onStateChange: function (event) {
-          if (event.data === YT.PlayerState.PLAYING) {
-            updateButtons(true);
-            setStatus("Lagu sedang diputar. Semoga Sayang suka ❤️");
-          }
+          switch (event.data) {
+            case YT.PlayerState.PLAYING:
+              updateButtons(true);
 
-          if (event.data === YT.PlayerState.PAUSED) {
-            updateButtons(false);
-            setStatus("Musik dijeda.");
-          }
+              // Periksa apakah lagu benar-benar dimulai
+              // sebelum posisi 0:24.
+              if (
+                player &&
+                player.getCurrentTime() < START_SECONDS - 2
+              ) {
+                player.seekTo(START_SECONDS, true);
+              }
 
-          if (event.data === YT.PlayerState.ENDED) {
-            updateButtons(false);
-            setStatus("Lagu selesai. Kamu bisa memutarnya lagi ♡");
-          }
+              setStatus(
+                "Lagu sedang diputar dari sekitar 0:24 ❤️"
+              );
+              break;
 
-          if (event.data === YT.PlayerState.BUFFERING) {
-            setStatus("Memuat lagu...");
+            case YT.PlayerState.PAUSED:
+              updateButtons(false);
+              setStatus("Musik dijeda.");
+              break;
+
+            case YT.PlayerState.BUFFERING:
+              setStatus("Memuat lagu dari posisi 0:24...");
+              break;
+
+            case YT.PlayerState.ENDED:
+              updateButtons(false);
+              setStatus("Lagu selesai. Tekan Play untuk mendengarkan lagi ♡");
+              break;
+
+            case YT.PlayerState.CUED:
+              // Video sudah siap. Jangan memaksa suara
+              // menyala tanpa interaksi pengguna.
+              if (!playRequested) {
+                setStatus(
+                  "Lagu siap dari 0:24. Tekan Play jika belum berbunyi ❤️"
+                );
+              }
+              break;
           }
         },
 
         onError: function (event) {
           updateButtons(false);
-          setStatus(
-            "Video tidak bisa diputar (kode " + event.data +
-            "). Coba video lain atau buka YouTube."
-          );
+
+          const messages = {
+            2: "ID video tidak valid.",
+            5: "Video tidak dapat diputar oleh pemutar HTML5.",
+            100: "Video tidak ditemukan atau sudah dihapus.",
+            101: "Pemilik video tidak mengizinkan pemutaran tertanam.",
+            150: "Pemilik video tidak mengizinkan pemutaran tertanam."
+          };
+
+          const message =
+            messages[event.data] ||
+            "Video gagal diputar. Periksa koneksi atau coba lagi.";
+
+          setStatus(message);
+          console.error("YouTube Player Error:", event.data);
         },
 
         onAutoplayBlocked: function () {
           updateButtons(false);
           setStatus(
-            "Autoplay diblokir browser. Tekan tombol Play untuk mulai musik ❤️"
+            "Autoplay diblokir browser. Tekan Play untuk mendengarkan lagu ❤️"
           );
         }
       }
     });
   };
 
-  // Memuat YouTube IFrame Player API.
-  (function loadYouTubeAPI() {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    tag.async = true;
+  // ==============================
+  // MEMUAT API YOUTUBE
+  // ==============================
+  function loadYouTubeAPI() {
+    if (window.YT && window.YT.Player) {
+      window.onYouTubeIframeAPIReady();
+      return;
+    }
 
-    tag.onerror = function () {
+    // Hindari menambahkan API script berkali-kali.
+    if (
+      document.querySelector(
+        'script[src="https://www.youtube.com/iframe_api"]'
+      )
+    ) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://www.youtube.com/iframe_api";
+    script.async = true;
+
+    script.onerror = function () {
       setStatus(
-        "API YouTube gagal dimuat. Periksa koneksi internet."
+        "YouTube API gagal dimuat. Periksa koneksi internet."
       );
     };
 
-    document.head.appendChild(tag);
-  })();
+    document.head.appendChild(script);
+  }
 
-  // Animasi hati terbang.
+  // ==============================
+  // ANIMASI HATI
+  // ==============================
   function makeHearts(count) {
     const symbols = ["♥", "♡", "💗", "✨"];
 
     for (let i = 0; i < count; i++) {
       const heart = document.createElement("span");
+
       heart.className = "floating-heart";
       heart.textContent =
         symbols[Math.floor(Math.random() * symbols.length)];
 
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (15 + Math.random() * 20) + "px";
+      heart.style.fontSize =
+        15 + Math.random() * 20 + "px";
+
       heart.style.color =
         Math.random() > 0.5 ? "#ff8198" : "#ffc0ca";
-      heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+      heart.style.animationDuration =
+        3 + Math.random() * 4 + "s";
 
       document.body.appendChild(heart);
+
       setTimeout(() => heart.remove(), 7500);
     }
   }
 
-  setInterval(() => {
-    if (Math.random() > 0.35) makeHearts(1);
+  // ==============================
+  // MULAI WEBSITE
+  // ==============================
+  loadYouTubeAPI();
+
+  heartTimer = setInterval(() => {
+    if (Math.random() > 0.35) {
+      makeHearts(1);
+    }
   }, 1800);
+})();
 </script>
 
 </body>
